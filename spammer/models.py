@@ -17,3 +17,20 @@ class Spammer(models.Model):
     class Meta:
         verbose_name = 'Менеджер'
         verbose_name_plural = 'Менеджеры'
+
+
+class Client(models.Model):
+    '''класс-модель для получателей рассылок'''
+    client_name = models.CharField(max_length=100, verbose_name='Имя клиента')
+    email = models.EmailField(verbose_name='email клиента', **NULLABLE)
+    is_active = models.BooleanField(verbose_name='действителен', default=True)
+
+
+    def __str__(self):
+        '''строковое отображение обьекта'''
+        return f'{self.client_name}, {self.is_active}'
+
+    class Meta:
+        verbose_name = 'Клиент'
+        verbose_name_plural = 'Клиенты'
+
