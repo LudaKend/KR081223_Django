@@ -11,9 +11,17 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+#from dotenv import load_dotenv
 
 import os
 PASSWORD = os.getenv('FOR_POSTGRES')   #для доступа к БД Postgresql нужен пароль
+# from dotenv import load_dotenv
+# dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+# if os.path.exists(dotenv_path):
+#     load_dotenv(dotenv_path)
+#load_dotenv()
+MAIL_LOGIN = os.getenv('MAIL_LOGIN')  #для доступа к почтовому ящику-отправителю нужен логин
+MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')  #для доступа к почтовому ящику-отправителю нужен пароль
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -136,3 +144,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_HOST ='smtp.mail.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = MAIL_LOGIN
+EMAIL_HOST_PASSWORD = MAIL_PASSWORD
+EMAIL_USE_SSL = True
