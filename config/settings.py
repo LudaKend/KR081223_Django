@@ -15,11 +15,12 @@ from pathlib import Path
 
 import os
 PASSWORD = os.getenv('FOR_POSTGRES')   #для доступа к БД Postgresql нужен пароль
-# from dotenv import load_dotenv
+
+
 # dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 # if os.path.exists(dotenv_path):
 #     load_dotenv(dotenv_path)
-#load_dotenv()
+# load_dotenv()
 MAIL_LOGIN = os.getenv('MAIL_LOGIN')  #для доступа к почтовому ящику-отправителю нужен логин
 MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')  #для доступа к почтовому ящику-отправителю нужен пароль
 
@@ -49,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mailing',
-    'spammer'
+    'spammer',
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -144,11 +146,23 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#для вывода в консоль
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_HOST ='smtp.mail.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = MAIL_LOGIN
-EMAIL_HOST_PASSWORD = MAIL_PASSWORD
-EMAIL_USE_SSL = True
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = '663610kosmo85@mail.ru'  # MAIL_LOGIN
+EMAIL_HOST_PASSWORD = 'ezErear8qdRX94ej2t5e'   # MAIL_PASSWORD
+#EMAIL_USE_SSL = True
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
+
+#для получения писем об ошибках сайта - обратная связь
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+#CRONJOBS =['*/5 * * * *', 'mailing.management.commands.manual_send.handle']
+CRONJOBS = [('*/5 * * * *', 'mailing.management.commands.check_cron.use_cron'),
+            ('*/5 * * * *', 'mailing.management.commands.manual_send.handle')]
 
