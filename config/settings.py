@@ -162,7 +162,7 @@ EMAIL_USE_SSL = False
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-#CRONJOBS =['*/5 * * * *', 'mailing.management.commands.manual_send.handle']
+#CRONJOBS =['*/5 * * * *', 'mailing.management.commands.check_cron.use_cron']
 CRONJOBS = [('*/5 * * * *', 'mailing.management.commands.check_cron.use_cron'),
             ('*/5 * * * *', 'mailing.management.commands.manual_send.handle')]
 

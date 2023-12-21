@@ -1,4 +1,5 @@
 from django.db import models
+from spammer.models import Spammer
 
 NULLABLE = {'null': True, 'blank': True}
 
@@ -6,7 +7,8 @@ NULLABLE = {'null': True, 'blank': True}
 class Mailing(models.Model):
     '''класс-модель для рассылок'''
     subject = models.CharField(max_length=100, verbose_name='Тема')
-    spammer = models.ForeignKey('spammer.Spammer', on_delete=models.CASCADE, verbose_name='ФИО менеджера')
+    #spammer = models.ForeignKey('spammer.Spammer', on_delete=models.CASCADE, verbose_name='ФИО менеджера')
+    spammer = models.ForeignKey(Spammer, on_delete=models.CASCADE, verbose_name='ФИО менеджера')
     mailing_text = models.TextField(verbose_name='Текст письма', **NULLABLE)
     time = models.TimeField(verbose_name='время отправки', **NULLABLE)
     period = models.ForeignKey('Period', on_delete=models.CASCADE,verbose_name='периодичность', **NULLABLE)
@@ -14,7 +16,7 @@ class Mailing(models.Model):
 
     def __str__(self):
         '''строковое отображение обьекта'''
-        return f'{self.subject}, {self.time}, {self.period}, {self.status}'
+        return f'{self.subject}, {self.spammer}, {self.spammer_id}, {self.time}, {self.period}, {self.status}'
 
     class Meta:
         verbose_name = 'Рассылка'
